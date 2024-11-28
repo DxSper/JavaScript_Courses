@@ -57,7 +57,32 @@ function startTimer() {
                 clearInterval(intervalId);
                 alert(`Temps écoulé : ${elapsedTime.toFixed(3)} secondes`)
                 timerStarted = false;
-                return
+                 // Création et ajout du bouton "Nouvelle Partie"
+                 const newGameButton = document.createElement('button');
+                 newGameButton.textContent = "Nouvelle Partie";
+                 newGameButton.id = "newGame";
+                 newGameButton.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    text-align: center;
+                 `;
+                 document.body.appendChild(newGameButton);
+ 
+                 // Ajout du gestionnaire de clic pour recharger la page
+                 newGameButton.addEventListener('click', () => {
+                     location.reload(); // Recharge la page
+                 });
+ 
+                 return;
             }
         }, 10);
     }
