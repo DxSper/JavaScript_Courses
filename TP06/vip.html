@@ -20,14 +20,14 @@
     />
     <link rel=icon
     href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/lemon.svg>
-    <title>Liste de fruits</title>
+    <title>Liste de VIP</title>
   </head>
   <body>
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container px-5">
         <a class="navbar-brand" href="#!">
-          <i class="fa-solid fa-lemon"></i> Liste de fruits</a
+          <i class="fa-solid fa-lemon"></i> Liste de VIP</a
         >
       </div>
     </nav>
@@ -83,118 +83,16 @@
           <button class="btn btn-danger">
             <i class="fa fa-trash"></i>
           </button>
+          <button class="btn btn-warning">
+            <i class="fa fa-check"></i>
+          </button>
         </td>
       </tr>
     </template>
   
   </body>
 
-<button id="btnAjouter2">Ajouter</button>
-<button id="btnLecture">Lecture</button>
-<button id="btnPatch">Patch</button>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    const url ='https://robotic-weft-375522-default-rtdb.europe-west1.firebasedatabase.app/'
-    const noeud = 'personnes'
-    const url2 = `${url}${noeud}.json`
-    // charger les personnes depuis firebase
-    
-    document.getElementById("btnAjouter2").onclick = async () => {
-        // ajt une personne 
-        const personne = {prenom:'Nicolas',nom:'CAGE'}
-        const response = await axios.post(url2, personne);
-        console.log(response.data);
-        const id = response.data.name;
-        console.log(id)
-    };
-    document.getElementById("btnLecture").onclick = async () => {
-        const response = await axios.get(url2);
-        const data = response.data;
-        // Exemple :
-        // const objet = {titre:'THEMATRIX', annee:'1999'};
-        // for (let atribut in objet){
-        //     console.log(atribut); // Titre et annee
-        //     console.log(objet[atribut]); // Un objet est aussi un tableau
-
-        // }
-        for (let id in data){
-            console.log(id);
-            console.log(data[id]);
-        };
-    };
-    document.getElementById('btnPatch').onclick = async () => {
-        const id = '-OCrVN6NFBoaJa73Nzy3'
-        const url3 = `${url}${noeud}/${id}.json`
-        const objet = {age:24};
-        const r = await axios.patch(url3,objet);
-        console.log(r.data);
-    }
-
-    document.getElementById('btnAjouter').onclick = async () => {
-        // recuperer l'input de Nom
-        const nom = document.getElementById('nom').value 
-        // recuper l'input de prenom 
-        const prenom = document.getElementById('prenom').value
-        // Si les valeurs sont vide ne rien faire :
-        if (nom == '' || prenom == '') {
-            return
-        }
-        // Si non alors mettre le nom en majuscule:
-        const nomMaj = nom.toUpperCase();
-        // Si non alors envoyer les données a firebase via axios
-        const personne = {prenom: prenom,nom: nomMaj}
-        const response = await axios.post(url2, personne);
-        // si les data de la response ne sont pas null 
-        if (response.data != null) {
-            // alors afficher les données dans le tableau
-            // console.log(response.data)
-            // Nous créons bien une personne avec l'objet prenom
-            // Appeler la fonction get
-            getPersonnes();
-        }
-    }
-
-    const remove = async (id) => {
-        const url3 = `${url}${noeud}/${id}.json`
-        const r = await axios.delete(url3)
-        console.log(r)
-        getPersonnes();
-    };
-
-    const getPersonnes = async () => {
-        const response = await axios.get(url2);
-        const data = response.data;
-        // Exemple :
-        // const objet = {titre:'THEMATRIX', annee:'1999'};
-        // for (let atribut in objet){
-        //     console.log(atribut); // Titre et annee
-        //     console.log(objet[atribut]); // Un objet est aussi un tableau
-
-        // }
-        
-
-        for (let id in data){
-            //console.log(id);
-            console.log(data[id]);
-            const newRow = document.createElement('tr');
-            const personne = data[id];
-            const idpersonne = id
-            newRow.innerHTML = `
-                <td>${personne.prenom}</td>
-                <td>${personne.nom}</td>
-                <td>
-                    <button class="btn btn-danger" onclick="remove('${idpersonne}')">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </td>
-            `;
-
-            const tbody = document.getElementById('myTbody');
-            tbody.appendChild(newRow);
-        };
-    }
-    getPersonnes();
-
-    
-</script>
-
+<script src="api.js"></script>
+  
